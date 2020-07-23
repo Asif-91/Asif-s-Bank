@@ -32,7 +32,7 @@
         <div class="col-md-4">
             <div class="withdraw status">
                 <h5>Withdraw</h5>
-                <h2>$00</h2>
+                <h2>$ <span id="currentWithdraw">00</span></h2>
             </div>
         </div>
         <div class="col-md-4">
@@ -54,9 +54,9 @@
         <div class="col-md-6">
         <div class="submit-area">
             <h4>withdraw</h4>
-            <input type="text" class="form-control" placeholder="$ amount you want to withdraw">
+            <input id="withdrawAmount" type="text" class="form-control" placeholder="$ amount you want to withdraw">
             <br>
-            <button class="btn btn-success">withdraw</button>
+            <button id="addWithdraw" class="btn btn-success">withdraw</button>
         </div>
         </div>
     </div>
@@ -85,24 +85,28 @@
         document.getElementById("depositAmount").value = "";
     })
 
-
-    //withdraw event button handler
+    //withdraw button event handler
     const withdrawBtn = document.getElementById("addWithdraw");
     withdrawBtn.addEventListener("click", function(){
+        const withdrawAmount =document.getElementById("withdrawAmount");
         const withdrawNumber = getInputNumber("withdrawAmount");
-        console.log(withdrawNumber);
+        
+        updateSpanText("currentWithdraw", withdrawNumber);
+        updateSpanText("currentBalance", -1 * withdrawNumber);
+
+        document.getElementById("withdrawAmount").value = ""
     })
 
     function getInputNumber(id){
         const amount = document.getElementById(id).value;
         const amountNumber = parseFloat(amount);
-        return  amountNumber;
+        return amountNumber;
     }
 
-    function updateSpanText(id, depositNumber){
+    function updateSpanText(id, adddedNumber){
         const current = document.getElementById(id).innerText;
         const currentNumber = parseFloat(current);
-        const totalAmount = depositNumber + currentNumber;
+        const totalAmount = adddedNumber + currentNumber;
         document.getElementById(id).innerText = totalAmount;
     }
 </script>
